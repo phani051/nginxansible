@@ -1,0 +1,18 @@
+- name: Play for Installing Nginx on web server
+  hosts: localhost
+  gather_facts: yes
+  vars: 
+    custom_heading: "Test Container by Phaneendra Kumar"
+    todays_date: "{{ ansible_facts['date_time']['date']}}"
+    host_name: "{{ ansible_facts['hostname'] }}"
+    fqdn_name: "{{ ansible_facts['fqdn'] }}"
+    ip_address: "{{ ansible_facts['eth0']['ipv4']['address'] }}"
+  tasks:
+    - name: Copy Files to index folder.
+      template:
+        src: /tmp/index.j2
+        dest: /var/www/html/index.nginx-debian.html
+        owner: root
+        group: root
+    - name: Restart nginix
+      command: service nginx restart
